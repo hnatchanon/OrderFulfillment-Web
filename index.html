@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Order Approval</title>
+	<link rel="stylesheet" href="css/style.css">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script>
+		function appendOrder( input ) {
+
+			/* -------XML------- */
+			// var order = input;
+			// var orderID = order.id;
+			// var status = order.childNodes[3].childNodes[0].nodeValue;
+			// var enterDate = order.childNodes[1].childNodes[0].nodeValue;
+			// var fulfilDate = order.childNodes[2].childNodes[0].nodeValue;
+
+			// var items = "<tr><td><center><img src='img/green_icon.jpg' style='width:25px;height:25px'></center></td><td>1</td><td>Pig</td><td>Eieieieieiei</td><td>3</td><td>5</td></tr>";
+
+			// var total = 999999;
+
+
+			// var content = 
+			// 	"<li class='order' id='"+ orderID + "'><span class='id'>Order ID: "+ orderID +"</span><span class='status'>Status: " + status + "</span><p>Enter Date: " + enterDate + "</p><p>Fulfil Date: " + fulfilDate + "</p><div class='innerBox hidden' id='item" + orderID + "'><table border='1px' style='width:80%;margin-left:auto;margin-right:auto'><tbody><tr><th>Fulfillable</th><th>ItemID</th><th>Item</th><th>Description</th><th>Ordered</th><th>InStock</th></tr>"
+
+			// 	+ items
+
+			// 	+ "</tbody></table></div><span class='total'>Total: " + total + "</span></li>";
+
+			// $(".box").append(content);
+
+			/* -------JSON------- */
+			var orders = input.orders.order;
+			console.log(orders);
+
+			for(var i=0; i<orders.length; i++) {
+
+				var orderID = orders[i].id;
+				var status = orders[i].status;
+				var enterDate = orders[i].orderDate;
+				var fulfilDate = orders[i].fulfillDate;
+
+				var items = orders[i].itemIDList;
+
+				var itemHtml = "";
+				var total = 0;
+
+				for(var j=0; j<items.length; j++) {
+					var id = items[j].id;
+					var name = "Pig";
+					var des = "Eieieieieiei";
+					var quantity = 15;
+					var inStock = 20;
+					var icon = "img/green_icon.jpg";
+
+					itemHtml += "<tr><td><center><img src='" + icon + "' style='width:25px;height:25px'></center></td><td>" + id + "</td><td>" + name + "</td><td>" + des + "</td><td>" + quantity + "</td><td>" + inStock + "</td></tr>"
+
+					total += 0;
+				}
+
+				console.log(items[0]);
+
+
+				var content = 
+					"<li class='order' id='"+ orderID + "'><span class='id'>Order ID: "+ orderID +"</span><span class='status'>Status: " + status + "</span><p>Enter Date: " + enterDate + "</p><p>Fulfil Date: " + fulfilDate + "</p><div class='innerBox hidden' id='item" + orderID + "'><table border='1px' style='width:80%;margin-left:auto;margin-right:auto'><tbody><tr><th>Fulfillable</th><th>ItemID</th><th>Item</th><th>Description</th><th>Ordered</th><th>InStock</th></tr>"
+
+					+ itemHtml
+
+					+ "</tbody></table></div><span class='total'>Total: " + total + "</span></li>";
+
+				$(".box").append(content);
+			}
+		}
+		$(document).ready(function(){
+
+			xmlhttp = null;
+			if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+				xmlhttp = new XMLHttpRequest();
+			}
+			else {// code for IE6, IE5
+				xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+			}
+			if (xmlhttp!=null) {
+				xmlhttp.onreadystatechange = function() {
+					if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+						xmlDoc = xmlhttp.responseXML;
+
+						/** -------JSON-------- **/
+						var json = jQuery.parseJSON(xmlhttp.responseText);
+						// console.log(json);
+
+						appendOrder(json);
+ 
+ 						/* -------XML------- */
+						// var txt = "";
+						// orders = xmlDoc.getElementsByTagName("order");
+
+						// for (i=0;i<orders.length;i++) {
+
+						// 	appendOrder(orders[i]);
+						// }
+
+					}
+				}
+				xmlhttp.open("GET","http://158.108.237.18:5722/ordf/orders",true);
+				xmlhttp.setRequestHeader("Accept","application/json"); // for json
+				xmlhttp.send();
+			}
+			else {
+				alert("Your browser does not support XMLHTTP.");
+			}
+
+			$("body").delegate(".order", "click" ,function() {
+				var id = $(this).attr("id");
+				console.log("click!!");
+				$(".hidden").hide();
+				$("#item"+id).show();
+			});
+		});
+	</script>
+</head>
+<body>
+	<div class="container bg-gray">
+		<div class="row head">Order Approval</div>
+		
+		<div class="row">
+			<center>
+			<ul class="box">
+				<!-- <li class="order" id="0">
+			        <span class="id">Order ID: 8888888888888</span>
+			        <span class="status">Status: waiting</span>
+			        <p>Enter Date: 88/88/88 88:88:88</p>
+			        <p>Fulfil Date: 88/88/88 88:88:88</p>
+			        <div class="innerBox hidden" id="item0">
+			        	<table border="1px" style="width:80%;margin-left:auto;margin-right:auto">
+							<tbody>
+								<tr>
+									<th>Fulfillable</th>
+									<th>ItemID</th>
+									<th>Item</th>
+									<th>Description</th>
+									<th>Ordered</th>
+									<th>InStock</th>
+								</tr>
+								<tr>
+									<td>
+										<center><img src="img/green_icon.jpg" style="width:25px;height:25px"></center>
+									</td>
+									<td>1</td>
+									<td>Pig</td>
+									<td>Eieieieieiei</td>
+									<td>3</td>
+									<td>5</td>
+								</tr>
+							</tbody>
+						</table>
+			        </div>
+			        <span class="total">Total: 88888888</span>
+			    </li> -->
+			</ul>
+			</center>
+		</div>
+	</div>
+</body>
+</html>

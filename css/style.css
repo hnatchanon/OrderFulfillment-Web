@@ -1,0 +1,98 @@
+body {
+	background-color: white;
+	padding: 10px;
+}
+
+.bg-gray {
+	background-color: gray;
+}
+
+.bg-white {
+	background-color: white;
+}
+
+.bg-black {
+	background-color: black;
+}
+
+.container {
+	width: 100%
+}
+
+.head {
+	font: normal small-caps bold 72px sans-serif;
+	padding: 18px 50px 18px 50px;
+}
+
+.row {
+	width: 100%;
+}
+
+ul.box {
+    width: 800px;
+    margin: 10px;
+    padding: 0px;
+}
+
+li.order {
+    background: #eee;
+    border: 5px solid #ddd;
+    border-radius: 20px;
+    display: block;
+    padding-left: 30px;
+    background-position: left center;
+}
+
+.order {
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.order span.id {
+    margin: 15px 0 5px 5px;
+    font-family: "Open Sans",sans-serif;
+    font-size: 26px;
+    color: #666;
+    float: left;
+    font-weight: 700;
+}
+
+.order span.total {
+    margin: 0px 30px 25px 0;
+    font-family: "Open Sans",sans-serif;
+    font-size: 26px;
+    color: #666;
+    float: right;
+    font-weight: 700;
+}
+
+.order span.status {
+    margin: 15px 30px 5px 0;
+    font-family: "Open Sans",sans-serif;
+    font-size: 26px;
+    float: right;
+    color: #666;
+    font-weight: 700;
+}
+
+
+.order p {
+    margin: 5px 0 5px 15px;
+    font-size: 14px;
+    color: #666;
+    clear: left; /* was clear: both; */
+    float: left;
+    font-weight: 700;
+}
+
+.innerBox {
+	margin: 5px 0px 5px 0px;
+	clear: left;
+    float: left;
+    width: 725px;
+    padding: 0px;
+}
+
+.hidden {
+    display: none;
+}
